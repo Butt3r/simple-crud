@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            Archive
+        </title>
+        <link rel="stylesheet" href="index.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+
+
+    <body>
+        <div class="info">
+            <h1 style="font-weight: 500;">오픈 아카이브</h1><br>
+            <p>좋아하는 영상, 이미지, 텍스트를 오픈 아카이브에 기록하고 모두와 공유하세요.<br>
+            </p>
+            <p style="opacity: 1; font-size: 10pt; color:#838282">*beta</p>
+            <br><br>
+
+        <h3 style="font: 700 1.1rem Arial;">contact</h3>
+        <p style="font: small Arial;">author@operator.com <br>©Butt3r</p>
+    </div>
+
+    
+        <i class="fa fa-plus add-btn" onclick="Toggle()" aria-hidden="true"></i>
+
+
+    <div class="form-modal">
+        <span class="close-btn" onclick="Toggle()">&times;</span>
+                   <form onsubmit="event.preventDefault(); submitForm();" autocomplete="off">
+                        <div>
+                            <lable>Title</lable>
+                            <input type="text" name="title" id="title">
+                        </div>
+                        <div>
+                            <lable>Artist</lable>
+                            <input type="text" name="artist" id="artist">
+                        </div>
+                        <div>
+                            <lable>Year</lable>
+                            <input type="text" name="year" id="year">
+                        </div>
+                        <div>
+                            <lable>Media</lable>
+                            <input type="text" name="media" id="media">
+                        </div>
+                        <div>
+                            <lable>File</lable>
+                            <input type="file" name="file" id="file" accept="image/*" onchange="loadFile(event)">
+                        </div>
+                        <div class ="submit-btn">
+                            <input type="submit" value="Submit">
+                        </div>
+                   </form>
+                </div>
+               
+
+        <td>
+            <table class ="list" id="archiveList">
+                <thred>
+                    <tr>
+                        <th>#</th>
+                        <th>title</th>
+                        <th>artist</th>
+                        <th>year</th>
+                        <th>media</th>
+                        <th>Actions</th>
+                    </tr>
+                </thred>
+                <tbody>
+                    
+                </tbody>
+            </table>
+         </td>
+
+         <div class ="image">
+            <img id="output" width="200" height="auto">
+        </div>
+
+        
+        <script src ="main.js"></script>
+    </body>
+</html>
+
+
