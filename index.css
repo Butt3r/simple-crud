@@ -11,6 +11,7 @@ body
     color: #0e0f0f;
     background-color: #fff8ee;
     margin: 0;
+    overflow-x: auto;
 }
 
 h1, h2, h3
@@ -36,24 +37,24 @@ table
 {
     border-collapse: collapse;
     margin-left: 20rem;
+    
 }
 
 table.iist
 {
-    position: relative;
     width:100%;
 }
 
 th
 {
-    text-align: left;
+    text-align: center;
     padding: 10px;
 }
 
 td
 {
     border: 1px solid rgb(238, 238, 231);
-    text-align: left;
+    text-align: center;
     padding: 10px;
     color: #252727;;
     cursor: pointer;
@@ -66,13 +67,14 @@ td
 th{ font: 700 1rem Arial;}
 
 button:focus {outline: 0;}
+select:focus {outline: 0;}
 
 
 .add-btn
 {
-    position: absolute;
+    /* position: absolute;
     top: 7.9rem;
-    right: 8.4rem;
+    right: 8.4rem; */
     opacity: 1;
 }
 
@@ -83,21 +85,125 @@ button:focus {outline: 0;}
 }
 
 
+.modal
+{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.226);
+  visibility: hidden;
+  opacity: 0;
+}
+
 .form-modal
 {
     position: absolute;
-    top: 45%;
+    top: 50%;
     left: 50%;
+    color: rgb(0, 0, 0);
     transform: translate(-50%, -50%);
-    background-color: rgb(243, 242, 236);
-    border: 1px solid #0e0f0f;
-    padding: 1rem 1rem;
+    background-color: snow;
+    box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.2);
+    padding: 4.5rem 3.5rem;
+    /* width: 54rem;  */
+    height: 36.5rem;
     width: 30rem;
-    height: 24rem;
-    visibility: hidden;
-    opacity: 0;
+    border-radius: 4px;
 }
 
+
+form
+{
+    margin: 55px auto 1px;
+}
+
+
+input
+{
+    outline: 2px solid rgb(226, 226, 226, 0.7);
+    display: block;
+    background-color: rgb(236, 236, 236);
+    width: 100%;
+    border: 0;
+    border-radius: 4px;
+    box-sizing: border-box;
+    padding: 12px 20px;
+    color: gray;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 700;
+}
+
+label
+{
+    display: block;
+    font: 700 0.5rem Arial;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    color: rgb(63, 63, 63);
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: .2em;
+}
+
+select
+{
+  width: 100%;
+  height: 50px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 0;
+  background-color: rgb(236, 236, 236);
+  border: none;
+  border-bottom: 1px solid rgb(75, 211, 154);
+  color: grey;
+  padding: 10px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 10px;
+  cursor: pointer;
+
+
+}
+
+select:hover {
+    cursor: pointer;    
+  }
+
+option 
+{
+    border: 0;
+    padding: 10px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+
+.submit-btn
+{
+    outline: none;
+    display: block;
+    background-color: rgb(75, 211, 154);
+    color: snow;
+    width: 100%;
+    border: 0;
+    border-radius: 4px;
+    box-sizing: border-box;
+    padding: 17px;
+    margin-top: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.submit-btn:hover
+{
+    box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.315);
+}
 
 .close-btn
 {
@@ -106,14 +212,13 @@ button:focus {outline: 0;}
   line-height: 1.5rem;
   text-align: center;
   cursor: pointer;
-  border-radius: 0.25rem;
-  background-color: lightgray;
+  font-size: 2.5rem;
+  opacity: 0.4;
 }
 
 .close-btn:hover
 {
-  color: ivory;
-  background-color: #5700f8;
+    opacity: 0.8;
 }
 
 .ed-container

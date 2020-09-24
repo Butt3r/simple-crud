@@ -7,53 +7,53 @@
         </title>
         <link rel="stylesheet" href="index.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-analytics.js"></script>
     </head>
 
 
     <body>
         <div class="info">
             <h1 style="font-weight: 500;">오픈 아카이브</h1><br>
-            <p>좋아하는 영상, 이미지, 텍스트를 오픈 아카이브에 기록하고 모두와 공유하세요.<br>
+            <p>좋아하는 영화, 음악, 서적을 오픈 아카이브에 기록하고 모두와 공유하세요.<br>
             </p>
-            <p style="opacity: 1; font-size: 10pt; color:#838282">*beta</p>
+            <p style = "font: 700 0.9rem Arial; color: rgb(34, 34, 34);"><i class="fa fa-plus add-btn" onclick="Toggle()" aria-hidden="true"></i> Add</p>
             <br><br>
-
-        <h3 style="font: 700 1.1rem Arial;">contact</h3>
-        <p style="font: small Arial;">author@operator.com <br>©Butt3r</p>
+        <h3 style="font: 700 1.1rem Arial; color: rgb(65, 187, 136);">contact</h3>
+        <p style="font: small Arial; color: rgb(88, 87, 85);">author@operator.com <br>©Butt3r</p><br>
     </div>
 
-    
-        <i class="fa fa-plus add-btn" onclick="Toggle()" aria-hidden="true"></i>
 
 
+<div class="modal">
     <div class="form-modal">
         <span class="close-btn" onclick="Toggle()">&times;</span>
-                   <form onsubmit="event.preventDefault(); submitForm();" autocomplete="off">
+                   <form id = "form" onsubmit="event.preventDefault(); submitForm();" autocomplete="off">
                         <div>
-                            <lable>Title</lable>
+                            <label>Title</label>
                             <input type="text" name="title" id="title">
                         </div>
                         <div>
-                            <lable>Artist</lable>
-                            <input type="text" name="artist" id="artist">
+                            <label>Category</label>
+                            <input type="text" name="kind" id="kind">
                         </div>
                         <div>
-                            <lable>Year</lable>
-                            <input type="text" name="year" id="year">
+                            <label>artist</label>
+                            <input type="text" name="assigned" id="assigned">
                         </div>
                         <div>
-                            <lable>Media</lable>
-                            <input type="text" name="media" id="media">
+                            <label>star</label>
+                            <select class="form-control" id="difficulty">
+                                <option value="⭐">Bad</option>
+                                <option value="⭐⭐⭐">So-So</option>
+                                <option value="⭐⭐⭐🌟">Love it</option>
+                            </select>
                         </div>
-                        <div>
-                            <lable>File</lable>
-                            <input type="file" name="file" id="file" accept="image/*" onchange="loadFile(event)">
-                        </div>
-                        <div class ="submit-btn">
-                            <input type="submit" value="Submit">
-                        </div>
+                        <button class = "submit-btn">Submit</button>
                    </form>
                 </div>
+            </div>
+            
                
 
         <td>
@@ -62,10 +62,10 @@
                     <tr>
                         <th>#</th>
                         <th>title</th>
+                        <th>category</th>
                         <th>artist</th>
-                        <th>year</th>
-                        <th>media</th>
-                        <th>Actions</th>
+                        <th>star</th>
+                        <th>actions</th>
                     </tr>
                 </thred>
                 <tbody>
@@ -73,13 +73,7 @@
                 </tbody>
             </table>
          </td>
-
-         <div class ="image">
-            <img id="output" width="200" height="auto">
-        </div>
-
-        
-        <script src ="main.js"></script>
+         <script src = "main.js"></script>
     </body>
 </html>
 
