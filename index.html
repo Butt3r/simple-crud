@@ -31,25 +31,26 @@
                    <form id = "form" onsubmit="event.preventDefault(); submitForm();" autocomplete="off">
                         <div>
                             <label>Title</label>
-                            <input type="text" name="title" id="title">
+                            <input type="text" data-key:="title" id="title">
                         </div>
                         <div>
                             <label>Category</label>
-                            <input type="text" name="kind" id="kind">
+                            <input type="text" data-key:="kind" id="kind">
                         </div>
                         <div>
                             <label>artist</label>
-                            <input type="text" name="assigned" id="assigned">
+                            <input type="text" data-key:="assigned" id="assigned">
                         </div>
                         <div>
                             <label>star</label>
-                            <select class="form-control" id="difficulty">
+                            <select class="form-control" data-key:="difficulty" id="difficulty">
                                 <option value="⭐">Bad</option>
                                 <option value="⭐⭐⭐">So-So</option>
                                 <option value="⭐⭐⭐🌟">Love it</option>
                             </select>
                         </div>
                         <button class = "submit-btn">Submit</button>
+                        <button class = "update-btn" onclick="updateData(this)">Update</button>
                    </form>
                 </div>
             </div>
