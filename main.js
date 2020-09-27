@@ -27,7 +27,7 @@ var config = {
     appId: "1:464146043818:web:08f228d322a1089414d1d3",
     measurementId: "G-39XT1VSXN5"
   };
-// Initialize Firebase
+
   firebase.initializeApp(config);
   firebase.analytics();
 
@@ -82,18 +82,17 @@ function writeData()
 function getData()
 {
 
+   // TODO: child_added, child_changed ... ETC
    var rRef = db.ref("recipe/");
-   rRef.on("value", function(snapshot)
+   rRef.once("value", function(snapshot)
    {
     snapshot.forEach(function(childSnapshot)
     {
         var dataVal = childSnapshot.val();  
         var dataKey = childSnapshot.key; 
-        //console.log(dataKey);
         console.log(Object.values(snapshot.val()));
         console.log(Object.keys(snapshot.val()));
-        updateData(dataVal, dataKey);
-        insertData(dataVal)
+        insertData(dataKey, dataVal);
     });
    });
   
@@ -101,7 +100,7 @@ function getData()
 }
 
 
-function insertData(data)
+function insertData(key, data)
 {
     var newRow = table.insertRow(table.length);
     var cell = newRow.insertCell(0);
@@ -121,18 +120,16 @@ function insertData(data)
 
     var cell5 = newRow.insertCell(5);
     cell5.innerHTML =  
-    `<i class = "fa fa-pencil" onClick="editData(this)" id="edit" style="color:#17bd7f"></i> &emsp;&nbsp;
-     <i class = "fa fa-trash" onClick="deleteData(this)" id="del" style="color:#ed2d40"></i>`
+    `<i class = "fa fa-pencil" onClick="editData(this, event)" id="${key}" style="color:#17bd7f"></i> &emsp;&nbsp;
+     <i class = "fa fa-trash" onClick="deleteData(this, event)" id="${key}" style="color:#ed2d40"></i>`
 
-
-
+    
+    
 }
 
 
-function editData(data)
+function editData(data, event)
 {
-    console.log(data.parentElement.parentElement);
-    
     selectedRow = data.parentElement.parentElement;
     title.value = selectedRow.cells[1].innerHTML;
     kind.value = selectedRow.cells[2].innerHTML;
@@ -142,32 +139,34 @@ function editData(data)
     submitBtn.classList.add('hide');
     updateBtn.classList.add('visible');
 
+    //var target = event.target.id;
+
 }
 
+// document.querySelector(".update-btn").addEventListener("submit", function(key)
+// {
+//     //let obj = {title: title.value, category: kind.value, level: level.value, user: assigned.value};
+//     console.log("check!");
+//     let titleObj = {title: title.value};
+//     var newRef = db.ref('recipe/' + key);
+//     newRef.update(titleObj);
+// });
 
-function updateData()
-{
 
-   // console.log(data);
-   // console.log(key);
-    
-    
-    let obj = {id: cnt, title: title.value, category: kind.value, level: level.value, user: assigned.value};
-    let titleObj = {title: title.value};
-    var newRef = db.ref("recipe/").child(selectedRow);
-    newRef.update(titleObj);
-      
-}
+
+
 
 
 function deleteData(data)
 {
+    var targetkey = event.target.id;
+
     if (confirm('Are you sure to delete this record ?')) {
         var activeRow = data.parentElement.parentElement.rowIndex;
         document.getElementById("archiveList").deleteRow(activeRow);
-        resetData();
-        let dRef = this.db.ref('recipe/' + counter);
+        let dRef = db.ref(`recipe/${targetkey}`);
         dRef.remove()
+        resetData();
     }
   
 }
