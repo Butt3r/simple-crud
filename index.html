@@ -31,31 +31,30 @@
                    <form id = "form" onsubmit="event.preventDefault(); submitForm();" autocomplete="off">
                         <div>
                             <label>Title</label>
-                            <input type="text" data-key:="title" id="title">
-                        </div>
-                        <div>
-                            <label>Category</label>
-                            <input type="text" data-key:="kind" id="kind">
+                            <input type="text" data-key:="title" id="title" class="input-value">
                         </div>
                         <div>
                             <label>artist</label>
-                            <input type="text" data-key:="assigned" id="assigned">
+                            <input type="text" data-key:="artist" id="artist" class="input-value">
+                        </div>
+                        <div>
+                            <label>Category</label>
+                            <input type="text" data-key:="kind" id="kind" class="input-value">
                         </div>
                         <div>
                             <label>star</label>
-                            <select class="form-control" data-key:="difficulty" id="difficulty">
+                            <select class="form-control" data-key:="rate" id="rate" class="input-value">
                                 <option value="⭐">Bad</option>
                                 <option value="⭐⭐⭐">So-So</option>
                                 <option value="⭐⭐⭐🌟">Love it</option>
                             </select>
                         </div>
                         <button class = "submit-btn">Submit</button>
-                        <button class = "update-btn" onclick="event.preventDefault(); updateData(event);">Update</button>
+                        <button class = "update-btn">Update</button>
                    </form>
                 </div>
             </div>
-            
-               
+    
 
         <td>
             <table class ="list" id="archiveList">

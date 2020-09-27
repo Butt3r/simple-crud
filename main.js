@@ -5,16 +5,13 @@ const modal = document.querySelector(".modal"),
       updateBtn = document.querySelector(".update-btn");
 
 
-const arr = ["title", "kind", "difficulty", "assigned"];
-let cnt = 0;
+const arr = ["title", "artist", "kind", "rate"];
 let selectedRow = null;
-
-
-let title = document.getElementById("title"),
+let getKey = "";
+var title = document.getElementById("title"),
+    artist = document.getElementById("artist"),
     kind = document.getElementById("kind"),
-    level = document.getElementById("difficulty"),
-    assigned = document.getElementById("assigned");
-    uid = document.querySelector(".userid");
+    rate = document.getElementById("rate");
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 var config = {
@@ -32,9 +29,8 @@ var config = {
   firebase.analytics();
 
   var db = firebase.database();
-  var d = new Date();
-  var t = d.getTime();
-  var counter = t;
+  var ts = new Date().getTime();
+  var counter = ts;
 
 
 function Toggle()
@@ -49,13 +45,18 @@ function Toggle()
 
 function submitForm()
 {
+    var formData = readData();
     if(!emptyCheck())
     {
         if(selectedRow == null)
         {
-            cnt++;
             writeData();
         }
+        else
+        {
+            updateData(formData);
+        }
+        history.go(0);
     resetData();
     }
    
@@ -68,9 +69,9 @@ function writeData()
     var postData = {
         id: counter,
         title: title.value,
+        artist: artist.value,
         category: kind.value,
-        level: level.value,
-        user: assigned.value
+        rate: rate.value,
     };
 
     var newRef = db.ref('recipe/');
@@ -95,13 +96,28 @@ function getData()
         insertData(dataKey, dataVal);
     });
    });
+
+
   
      
 }
 
+function readData()
+{
+    var formData = {};
+
+    for(var i in arr)
+    {
+        formData[arr[i]] = document.getElementById(arr[i]).value;
+    }
+
+    return formData;
+
+}
 
 function insertData(key, data)
 {
+
     var newRow = table.insertRow(table.length);
     var cell = newRow.insertCell(0);
     var cell1 = newRow.insertCell(1);
@@ -112,9 +128,9 @@ function insertData(key, data)
     
     cell.innerHTML = data.id;
     cell1.innerHTML = data.title;
-    cell2.innerHTML = data.category;
-    cell3.innerHTML = data.level;
-    cell4.innerHTML = data.user;
+    cell2.innerHTML = data.artist;
+    cell3.innerHTML = data.category;
+    cell4.innerHTML = data.rate;
    
     
 
@@ -122,8 +138,6 @@ function insertData(key, data)
     cell5.innerHTML =  
     `<i class = "fa fa-pencil" onClick="editData(this, event)" id="${key}" style="color:#17bd7f"></i> &emsp;&nbsp;
      <i class = "fa fa-trash" onClick="deleteData(this, event)" id="${key}" style="color:#ed2d40"></i>`
-
-    
     
 }
 
@@ -132,39 +146,34 @@ function editData(data, event)
 {
     selectedRow = data.parentElement.parentElement;
     title.value = selectedRow.cells[1].innerHTML;
-    kind.value = selectedRow.cells[2].innerHTML;
-    level.value = selectedRow.cells[3].innerHTML;
-    assigned.value  = selectedRow.cells[4].innerHTML;
+    artist.value = selectedRow.cells[2].innerHTML;
+    kind.value = selectedRow.cells[3].innerHTML;
+    rate.value  = selectedRow.cells[4].innerHTML;
     modal.classList.toggle('visible');
     submitBtn.classList.add('hide');
     updateBtn.classList.add('visible');
 
-    //var target = event.target.id;
-
+    getKey = event.target.id
 }
 
-// document.querySelector(".update-btn").addEventListener("submit", function(key)
-// {
-//     //let obj = {title: title.value, category: kind.value, level: level.value, user: assigned.value};
-//     console.log("check!");
-//     let titleObj = {title: title.value};
-//     var newRef = db.ref('recipe/' + key);
-//     newRef.update(titleObj);
-// });
 
-
-
-
+function updateData(formData)
+{
+    console.log(getKey);
+    let updates = {title: formData.title, artist: formData.artist, category: formData.kind, rate: formData.rate};
+    const newRef = db.ref(`recipe/${getKey}`);
+    newRef.update(updates);
+}
 
 
 function deleteData(data)
 {
-    var targetkey = event.target.id;
+    //var targetkey = event.target.id;
 
-    if (confirm('Are you sure to delete this record ?')) {
+    if (confirm('현재 레코드를 삭제하시겠습니까?')) {
         var activeRow = data.parentElement.parentElement.rowIndex;
         document.getElementById("archiveList").deleteRow(activeRow);
-        let dRef = db.ref(`recipe/${targetkey}`);
+        let dRef = db.ref(`recipe/${getkey}`);
         dRef.remove()
         resetData();
     }
