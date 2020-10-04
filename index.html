@@ -3,24 +3,25 @@
     <head>
         <meta charset="UTF-8">
         <title>
-            Archive
+           OPEN CUISINE
         </title>
         <link rel="stylesheet" href="index.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase.js"></script>
         <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-analytics.js"></script>
+        <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
     </head>
 
 
     <body>
         <div class="info">
-            <h1 style="font-weight: 500;">오픈 아카이브</h1><br>
-            <p>좋아하는 영화, 음악, 서적을 오픈 아카이브에 기록하고 모두와 공유하세요.<br>
+            <h1 style="font-weight: 500;">오픈 퀴진</h1><br>
+            <p>관심있는 레시피를 오픈 퀴진에 기록하고 모두와 공유하세요.<br>
             </p>
             <p style = "font: 700 0.9rem Arial; color: rgb(34, 34, 34);"><i class="fa fa-plus add-btn" onclick="Toggle()" aria-hidden="true"></i> Add</p>
             <br><br>
-        <h3 style="font: 700 1.1rem Arial; color: rgb(65, 187, 136);">contact</h3>
-        <p style="font: small Arial; color: rgb(88, 87, 85);">author@operator.com <br>©Butt3r</p><br>
+        <h3 style="font: 700 1.1rem Arial; color: rgb(37, 189, 125);">contact</h3>
+        <p style="font: small Arial; color: rgb(88, 87, 85);">author@openquisine.com <br>©Butt3r</p><br>
     </div>
 
 
@@ -30,23 +31,27 @@
         <span class="close-btn" onclick="Toggle()">&times;</span>
                    <form id = "form" onsubmit="event.preventDefault(); submitForm();" autocomplete="off">
                         <div>
+                            <label>Types</label>
+                            <input type="text" data-key:="kind" id="kind" class="input-value">
+                        </div>
+                        <div>
                             <label>Title</label>
                             <input type="text" data-key:="title" id="title" class="input-value">
                         </div>
                         <div>
-                            <label>artist</label>
-                            <input type="text" data-key:="artist" id="artist" class="input-value">
+                            <label>Form</label>
+                            <input type="text" data-key:="format" id="format" class="input-value">
                         </div>
                         <div>
-                            <label>Category</label>
-                            <input type="text" data-key:="kind" id="kind" class="input-value">
+                            <label>Link</label>
+                            <input type="url" data-key:="link" id="link" class="input-value">
                         </div>
                         <div>
-                            <label>star</label>
+                            <label>Rate</label>
                             <select class="form-control" data-key:="rate" id="rate" class="input-value">
-                                <option value="⭐">Bad</option>
-                                <option value="⭐⭐⭐">So-So</option>
-                                <option value="⭐⭐⭐🌟">Love it</option>
+                                <option value="⭐">EASY</option>
+                                <option value="⭐⭐⭐">MEDIUM</option>
+                                <option value="⭐⭐⭐🌟">HARD</option>
                             </select>
                         </div>
                         <button class = "submit-btn">Submit</button>
@@ -57,14 +62,14 @@
     
 
         <td>
-            <table class ="list" id="archiveList">
+            <table class ="list" id="table-id">
                 <thred>
                     <tr>
-                        <th>#</th>
+                        <!-- <th>#</th> -->
+                        <th>types</th>
                         <th>title</th>
-                        <th>category</th>
-                        <th>artist</th>
-                        <th>star</th>
+                        <th>form</th>
+                        <th>level</th>
                         <th>actions</th>
                     </tr>
                 </thred>

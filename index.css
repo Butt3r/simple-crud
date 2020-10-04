@@ -14,7 +14,7 @@ body
     overflow-x: auto;
 }
 
-h1, h2, h3
+h1, h2, h3, h4
 {
     margin: 0;
     word-break: keep-all;
@@ -48,6 +48,7 @@ table.iist
 th
 {
     text-align: center;
+    font: 700 1rem Arial;
     padding: 10px;
 }
 
@@ -56,19 +57,48 @@ td
     border: 1px solid rgb(238, 238, 231);
     text-align: center;
     padding: 10px;
-    color: #252727;;
+    color: #252727;
+    align-items: center;
+
+}
+
+
+tr
+{
+    width: 100;
+    height: auto;
+    position: relative;
+    overflow: hidden;
     cursor: pointer;
+
 }
 
 /* tr:nth-child(even),table.list thead>tr {
-    background-color: #ece6dc;
+    background-color: rgb(240, 235, 231);
 } */
 
-th{ font: 700 1rem Arial;}
+
 
 button:focus {outline: 0;}
 select:focus {outline: 0;}
 
+@media ( max-width: 1000px ) {
+    body
+    {
+        padding: 20px;
+    }
+    .info
+    {
+        position: relative;
+    }
+    .table, table.list
+    {
+        float: none;
+        width: auto;
+        margin-left: 0;
+        min-width: 0;
+    }
+}
 
 .add-btn
 {
@@ -107,8 +137,7 @@ select:focus {outline: 0;}
     background-color: snow;
     box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.2);
     padding: 4.5rem 3.5rem;
-    /* width: 54rem;  */
-    height: 36.5rem;
+    height: 41.5rem;
     width: 30rem;
     border-radius: 4px;
 }
@@ -151,7 +180,7 @@ label
 select
 {
   width: 100%;
-  height: 50px;
+  height: 40px;
   font-size: 15px;
   font-weight: 600;
   border-radius: 0;
@@ -184,11 +213,11 @@ option
 
 .submit-btn
 {
-    outline: none;
     display: block;
     background-color: rgb(75, 211, 154);
     color: snow;
     width: 100%;
+    height: 60px;
     border: 0;
     border-radius: 4px;
     box-sizing: border-box;
@@ -207,11 +236,11 @@ option
 
 .update-btn
 {
-    outline: none;
     display: block;
     background-color: rgb(228, 78, 19);
     color: snow;
     width: 100%;
+    height: 60px;
     border: 0;
     border-radius: 4px;
     box-sizing: border-box;
@@ -267,3 +296,4 @@ i
 
 .visible{visibility: visible; opacity: 1;}
 .hide{visibility: hidden; opacity: 0; display: none;}
+.colored{border-bottom: 1px solid rgb(228, 78, 19);}

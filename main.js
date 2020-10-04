@@ -1,17 +1,24 @@
 const modal = document.querySelector(".modal"),
-      table = document.getElementById("archiveList").getElementsByTagName('tbody')[0],
+      table = document.getElementById("table-id").getElementsByTagName('tbody')[0],
       addModal = document.querySelector(".add-btn"),
       submitBtn = document.querySelector(".submit-btn"),
-      updateBtn = document.querySelector(".update-btn");
+      updateBtn = document.querySelector(".update-btn"),
+      selectForm = document.querySelector(".form-control");
 
 
-const arr = ["title", "artist", "kind", "rate"];
+
+const arr = ["kind", "title", "format", "rate", "link"];
+// TODO: increment id
+//const increment = firebase.database.ServerValue.increment(1);
+
+
 let selectedRow = null;
 let getKey = "";
 var title = document.getElementById("title"),
-    artist = document.getElementById("artist"),
     kind = document.getElementById("kind"),
-    rate = document.getElementById("rate");
+    format = document.getElementById("format"),
+    rate = document.getElementById("rate"),
+    url = document.getElementById("link");
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 var config = {
@@ -29,8 +36,10 @@ var config = {
   firebase.analytics();
 
   var db = firebase.database();
+  var ref = firebase.database().ref('recipe/')
   var ts = new Date().getTime();
   var counter = ts;
+
 
 
 function Toggle()
@@ -38,10 +47,10 @@ function Toggle()
     modal.classList.toggle('visible');
     submitBtn.classList.remove('hide');
     updateBtn.classList.remove('visible');
+    selectForm.classList.remove('colored');
     resetData();
     
 }
-
 
 function submitForm()
 {
@@ -49,33 +58,27 @@ function submitForm()
     if(!emptyCheck())
     {
         if(selectedRow == null)
-        {
-            writeData();
-        }
+            writeData(formData);
         else
-        {
             updateData(formData);
-        }
         history.go(0);
     resetData();
     }
    
 }
 
-function writeData()
+function writeData(data)
 {
     counter++;
 
     var postData = {
-        id: counter,
-        title: title.value,
-        artist: artist.value,
-        category: kind.value,
-        rate: rate.value,
+        category: data.kind,
+        title: data.title,
+        format: data.format,
+        rate: data.rate,
+        url: data.link
     };
-
-    var newRef = db.ref('recipe/');
-    newRef.push(postData).key;
+    ref.push(postData).key;
     
 }
 
@@ -84,8 +87,7 @@ function getData()
 {
 
    // TODO: child_added, child_changed ... ETC
-   var rRef = db.ref("recipe/");
-   rRef.once("value", function(snapshot)
+   ref.once("value", function(snapshot)
    {
     snapshot.forEach(function(childSnapshot)
     {
@@ -96,9 +98,6 @@ function getData()
         insertData(dataKey, dataVal);
     });
    });
-
-
-  
      
 }
 
@@ -118,49 +117,72 @@ function readData()
 function insertData(key, data)
 {
 
-    var newRow = table.insertRow(table.length);
-    var cell = newRow.insertCell(0);
-    var cell1 = newRow.insertCell(1);
-    var cell2 = newRow.insertCell(2);
-    var cell3 = newRow.insertCell(3);
-    var cell4 = newRow.insertCell(4);
+    //var cell = newRow.insertCell(0);
+    // cell.innerHTML = data.id;
 
-    
-    cell.innerHTML = data.id;
-    cell1.innerHTML = data.title;
-    cell2.innerHTML = data.artist;
-    cell3.innerHTML = data.category;
+    var newRow = table.insertRow(table.length);
+    var cell1 = newRow.insertCell(0);
+    var cell2 = newRow.insertCell(1);
+    var cell3 = newRow.insertCell(2);
+    var cell4 = newRow.insertCell(3);
+
+    cell1.innerHTML = data.category;
+    cell2.innerHTML = data.title;
+    cell3.innerHTML = data.format;
     cell4.innerHTML = data.rate;
    
     
 
-    var cell5 = newRow.insertCell(5);
+    var cell5 = newRow.insertCell(4);
     cell5.innerHTML =  
-    `<i class = "fa fa-pencil" onClick="editData(this, event)" id="${key}" style="color:#17bd7f"></i> &emsp;&nbsp;
-     <i class = "fa fa-trash" onClick="deleteData(this, event)" id="${key}" style="color:#ed2d40"></i>`
+    `<i class = "fa fa-pencil" onClick="event.stopPropagation(); editData(this, event)"  id="${key}" style="color:#17bd7f"></i> &emsp;&nbsp;
+     <i class = "fa fa-trash" onClick="event.stopPropagation(); deleteData(this, event)" id="${key}" style="color:#ed2d40"></i>`
+
+
     
+    newRow.onclick = function(e)
+    {
+        //alert(key);
+        console.log(e);
+        ref.child(key).once("value", function(childSnapshot){
+            window.open(childSnapshot.val().url);
+        });
+    }
+
 }
+ 
 
-
-function editData(data, event)
+function editData(data)
 {
+
     selectedRow = data.parentElement.parentElement;
-    title.value = selectedRow.cells[1].innerHTML;
-    artist.value = selectedRow.cells[2].innerHTML;
-    kind.value = selectedRow.cells[3].innerHTML;
-    rate.value  = selectedRow.cells[4].innerHTML;
+    console.log(selectedRow);
+    
+    getKey = event.target.id;
+
+    ref.child(getKey).once("value", function(snapshot)
+   {
+        kind.value = snapshot.val().category;
+        title.value = snapshot.val().title;
+        format.value = snapshot.val().format;
+        rate.value  = snapshot.val().rate;
+        url.value = snapshot.val().url;
+       
+    });
     modal.classList.toggle('visible');
     submitBtn.classList.add('hide');
     updateBtn.classList.add('visible');
+    selectForm.classList.add('colored');
+    
 
-    getKey = event.target.id
+   
 }
 
 
 function updateData(formData)
 {
     console.log(getKey);
-    let updates = {title: formData.title, artist: formData.artist, category: formData.kind, rate: formData.rate};
+    let updates = {category: formData.kind, title: formData.title, format: formData.format, rate: formData.rate, url: formData.link};
     const newRef = db.ref(`recipe/${getKey}`);
     newRef.update(updates);
 }
@@ -168,12 +190,12 @@ function updateData(formData)
 
 function deleteData(data)
 {
-    //var targetkey = event.target.id;
+    var targetkey = event.target.id;
 
-    if (confirm('현재 레코드를 삭제하시겠습니까?')) {
+    if (confirm('Are you sure you want to delete?')) {
         var activeRow = data.parentElement.parentElement.rowIndex;
-        document.getElementById("archiveList").deleteRow(activeRow);
-        let dRef = db.ref(`recipe/${getkey}`);
+        document.getElementById("table-id").deleteRow(activeRow);
+        let dRef = db.ref(`recipe/${targetkey}`);
         dRef.remove()
         resetData();
     }
@@ -182,8 +204,8 @@ function deleteData(data)
 
 function resetData()
 {
-    var form = document.getElementById("form");
-    form.reset();
+    var Dataform = document.getElementById("form");
+    Dataform.reset();
     selectedRow = null;
 }
 
@@ -203,11 +225,10 @@ function emptyCheck()
     return isEmpty;
 }
 
-
 function init()
 {
     getData();
-
+  
 }
 
 init();
