@@ -38,6 +38,7 @@ table
     border-collapse: collapse;
     margin-left: 20rem;
     
+    
 }
 
 table.iist
@@ -59,6 +60,7 @@ td
     padding: 10px;
     color: #252727;
     align-items: center;
+    cursor: pointer;
 
 }
 
@@ -69,7 +71,7 @@ tr
     height: auto;
     position: relative;
     overflow: hidden;
-    cursor: pointer;
+    /* cursor: pointer; */
 
 }
 
@@ -125,6 +127,8 @@ select:focus {outline: 0;}
   background-color: rgba(0, 0, 0, 0.226);
   visibility: hidden;
   opacity: 0;
+  z-index: 5;
+  
 }
 
 .form-modal
@@ -140,6 +144,7 @@ select:focus {outline: 0;}
     height: 41.5rem;
     width: 30rem;
     border-radius: 4px;
+
 }
 
 

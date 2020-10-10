@@ -28,8 +28,9 @@
 
 <div class="modal">
     <div class="form-modal">
-        <span class="close-btn" onclick="Toggle()">&times;</span>
-                   <form id = "form" onsubmit="event.preventDefault(); submitForm();" autocomplete="off">
+        <div class="form-footer">
+        <span class="close-btn" onclick="Toggle()">&times;</span></div>
+                           <form id = "form" onsubmit="event.preventDefault(); submitForm();" autocomplete="off">
                         <div>
                             <label>Types</label>
                             <input type="text" data-key:="kind" id="kind" class="input-value">
